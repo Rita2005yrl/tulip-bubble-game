@@ -8,8 +8,5 @@
   },
   "dependencies": {
     "vite": "latest"
-  },
-  "devDependencies": {
-    "wrangler": "^4.123.0"
   }
 }
