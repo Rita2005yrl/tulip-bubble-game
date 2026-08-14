@@ -12,6 +12,5 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/server ./server
 COPY --from=build /app/game-engine.js ./game-engine.js
 COPY --from=build /app/package.json ./package.json
-VOLUME ["/app/data"]
 EXPOSE 3000
 CMD ["node", "server/index.js"]
