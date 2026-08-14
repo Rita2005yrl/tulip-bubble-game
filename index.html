@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#173f35" />
+    <title>郁金香泡沫：阿姆斯特丹花市</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">TB</span>
+          <div>
+            <p>阿姆斯特丹 · 1636</p>
+            <h1>郁金香泡沫</h1>
+          </div>
+        </div>
+        <div class="round-status" aria-live="polite">
+          <span id="round-label">等待开市</span>
+          <strong id="phase-label">传统规则</strong>
+        </div>
+        <div class="top-actions">
+          <span class="connection-status" id="connection-status"><i></i><b>未连接</b></span>
+          <button type="button" class="text-button dark-surface" id="rules-button">规则</button>
+          <button type="button" class="text-button dark-surface hidden" id="reset-game">离开房间</button>
+        </div>
+      </header>
+
+      <section class="setup-screen" id="setup-screen">
+        <div class="setup-art" aria-hidden="true">
+          <div class="setup-flower red"></div>
+          <div class="setup-flower yellow"></div>
+          <div class="setup-flower white"></div>
+          <p>一株花的价格，<br />可以高过一座运河宅邸。</p>
+        </div>
+        <div class="setup-copy">
+          <section id="entry-panel">
+            <p class="overline">跨设备实时联机 · 传统规则</p>
+            <h2>用一枚房间码，召集整座花市。</h2>
+            <p>
+              每位商人使用自己的手机或电脑加入。现金、手牌与秘密决定只在本人屏幕显示，市场、投标和竞拍会自动同步。
+            </p>
+            <div class="mode-switch" role="tablist" aria-label="联机方式">
+              <button type="button" class="active" id="create-mode" role="tab" aria-selected="true">创建房间</button>
+              <button type="button" id="join-mode" role="tab" aria-selected="false">加入房间</button>
+            </div>
+            <form id="online-form" class="online-form">
+              <label>
+                你的称呼
+                <input id="player-name" name="player-name" maxlength="12" autocomplete="nickname" placeholder="例如：花商安娜" required />
+              </label>
+              <label id="room-size-field">
+                房间人数
+                <select id="player-count" name="player-count">
+                  <option value="3" selected>3 人</option>
+                  <option value="4">4 人</option>
+                  <option value="5">5 人</option>
+                </select>
+              </label>
+              <label id="room-code-field" class="hidden">
+                房间码
+                <input id="room-code" name="room-code" maxlength="6" inputmode="text" autocomplete="off" placeholder="例如：TULIP7" />
+              </label>
+              <button type="submit" class="primary-button" id="online-submit">创建联机房间</button>
+            </form>
+            <p class="form-error hidden" id="entry-error" role="alert"></p>
+            <small>3–5 人 · 服务器自动保存进度 · 断线后可回到原座位</small>
+          </section>
+
+          <section id="lobby-panel" class="lobby-panel hidden">
+            <p class="overline">阿姆斯特丹花市 · 等候室</p>
+            <div class="room-code-block">
+              <span>房间码</span>
+              <strong id="lobby-room-code">------</strong>
+              <button type="button" class="secondary-button" id="copy-room-link">复制邀请链接</button>
+            </div>
+            <div class="lobby-heading">
+              <div><h2>商人正在入场</h2><p id="lobby-count">1 / 3 位</p></div>
+              <span class="sync-pulse" aria-label="正在同步"></span>
+            </div>
+            <div class="lobby-players" id="lobby-players"></div>
+            <label class="start-player-field hidden" id="start-player-field">
+              起始玩家
+              <select id="start-player" name="start-player"></select>
+            </label>
+            <button type="button" class="primary-button lobby-start hidden" id="start-game">至少 3 人才能开市</button>
+            <p class="lobby-wait" id="lobby-wait">房主开市后，所有设备会同时进入桌面。</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="tabletop hidden" id="tabletop">
+        <aside class="left-rail">
+          <section class="event-panel table-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="overline">市场事件</p>
+                <h2 id="event-title">开市准备</h2>
+              </div>
+              <span class="event-stamp" id="event-symbol" aria-hidden="true">?</span>
+            </div>
+            <p id="event-text">开局会先翻开一张事件牌并调整行情。</p>
+          </section>
+
+          <section class="price-board table-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="overline">交易所价目表</p>
+                <h2>七级行情</h2>
+              </div>
+              <span class="bubble-count" id="market-deck-count">郁金香牌 51</span>
+            </div>
+            <div id="price-tracks" class="price-tracks" aria-label="郁金香市场价格"></div>
+          </section>
+
+          <section class="collector-panel table-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="overline">场外买家</p>
+                <h2>收藏家委托</h2>
+              </div>
+            </div>
+            <div id="collectors" class="collector-list"></div>
+          </section>
+        </aside>
+
+        <section class="market-board table-panel">
+          <div class="market-toolbar">
+            <div class="market-context">
+              <p class="overline">当前行动</p>
+              <h2 id="active-player">等待商人入场</h2>
+            </div>
+            <ol class="phase-timeline" id="phase-timeline" aria-label="本轮流程">
+              <li data-stage="event"><span>1</span><b>市场事件</b></li>
+              <li data-stage="incoming"><span>2</span><b>进货</b></li>
+              <li data-stage="sell"><span>3</span><b>出售</b></li>
+              <li data-stage="auction"><span>4</span><b>购买/拍卖</b></li>
+              <li data-stage="supply"><span>5</span><b>供需调价</b></li>
+              <li data-stage="cleanup"><span>6</span><b>清理</b></li>
+            </ol>
+          </div>
+
+          <div class="market-lanes" id="market-lanes">
+            <section class="market-lane incoming-lane">
+              <div class="lane-heading">
+                <span>I</span>
+                <div><strong>即将进货</strong><small>下一轮进入现货 · 公开不可购买</small></div>
+              </div>
+              <div class="card-row" id="incoming-row"></div>
+            </section>
+            <section class="market-lane stock-lane">
+              <div class="lane-heading">
+                <span>II</span>
+                <div><strong>市场现货</strong><small>本轮可购买 · 直接落标</small></div>
+              </div>
+              <div class="card-row" id="stock-row"></div>
+            </section>
+            <section class="market-lane sold-lane">
+              <div class="lane-heading">
+                <span>III</span>
+                <div><strong>本轮售出</strong><small>玩家本轮卖出 · 计入供需</small></div>
+              </div>
+              <div class="card-row" id="sold-row"></div>
+            </section>
+          </div>
+
+          <section class="supply-explainer hidden" id="supply-explainer" aria-live="polite"></section>
+
+          <div class="action-dock">
+            <div class="action-copy">
+              <p class="overline" id="action-kicker">开市准备</p>
+              <strong id="action-title">选择人数并开始游戏</strong>
+              <span id="action-text">系统会按传统规则生成牌组、事件与收藏家。</span>
+            </div>
+            <div class="action-controls">
+              <label class="bid-entry hidden" id="bid-entry">
+                <span>你的出价</span>
+                <input type="number" id="bid-amount" inputmode="numeric" min="1" step="1" />
+              </label>
+              <div class="action-buttons">
+                <button type="button" class="secondary-button hidden" id="pass-button">结束行动</button>
+                <button type="button" class="primary-button hidden" id="next-button">继续</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-rail">
+          <section class="queen-panel table-panel">
+            <div class="queen-art" aria-hidden="true"><span>ƒ120</span></div>
+            <div>
+              <p class="overline">终极藏品</p>
+              <h2>夜后</h2>
+              <p>买入阶段开始时，现金至少 ƒ120 且没有贷款，即可宣布购买并触发胜利。</p>
+              <button type="button" class="dark-button" id="buy-queen">查看购买资格</button>
+            </div>
+          </section>
+
+          <section class="players-panel table-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="overline">商人账簿</p>
+                <h2>挡板与购买标记</h2>
+              </div>
+            </div>
+            <div id="players" class="players-list"></div>
+          </section>
+
+          <section class="ledger-panel table-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="overline">酒馆传闻</p>
+                <h2>交易记录</h2>
+              </div>
+            </div>
+            <ol id="game-log" class="game-log"></ol>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <div class="table-toast" id="table-toast" role="status" aria-live="polite"></div>
+
+    <aside class="room-ribbon hidden" id="room-ribbon">
+      <span>房间</span><strong id="table-room-code">------</strong><button type="button" id="copy-table-link" title="复制邀请链接" aria-label="复制邀请链接">⧉</button>
+    </aside>
+
+    <dialog id="choice-dialog">
+      <div class="dialog-card" id="choice-card">
+        <p class="overline" id="choice-kicker">购买方式</p>
+        <h2 id="choice-title">取得郁金香</h2>
+        <p id="choice-text"></p>
+        <div class="dialog-actions" id="choice-actions"></div>
+      </div>
+    </dialog>
+
+    <dialog id="rules-dialog">
+      <div class="dialog-card rules-card">
+        <div class="dialog-heading">
+          <div>
+            <p class="overline">传统规则摘要</p>
+            <h2>一轮市场如何运作</h2>
+          </div>
+          <button type="button" class="text-button" id="close-rules">关闭</button>
+        </div>
+        <div class="rules-grid">
+          <section><strong>1 · 市场事件</strong><p>回合开始时先翻开并结算事件牌造成的价格变化。事件调价与回合末的供需调价分开处理。</p></section>
+          <section><strong>2 · 进货</strong><p>上一轮“即将进货”移入“市场现货”，随后立刻公开新的“即将进货”。两区数量始终为玩家人数 + 2。</p></section>
+          <section><strong>3 · 出售</strong><p>依起始玩家顺序，每人可向市场出售任意株郁金香。卖出的花进入“本轮售出”并保留到供需统计结束。</p></section>
+          <section><strong>4 · 摆标与竞拍</strong><p>第一轮可放 0–2 枚，第二轮可放 0–1 枚；只能标记市场现货。单枚按市价购买，多枚进入公开竞拍。</p></section>
+          <section><strong>5 · 付款</strong><p>胜者可付现金或全额融资，不能部分融资。融资额就是成交价，胜者的一枚购买标记会锁在贷款牌上；高于市价的差额由银行平均补偿落败者。</p></section>
+          <section><strong>6 · 供需与清理</strong><p>统计“即将进货 + 剩余现货 + 本轮售出”。最多颜色降一级，最少颜色升一级；全部相同则不变。调价完成后才清理现货和售出区。</p></section>
+          <section><strong>贷款</strong><p>泡沫破裂前可随时按成交价赎回。也可在出售阶段卖回市场并偿债；若市价低于贷款，差额必须由现金补足。</p></section>
+          <section><strong>终局</strong><p>泡沫破裂时手牌价值归零，以现金减未偿贷款排名。买入阶段开始时，无贷款且现金不少于 ƒ120 的玩家可宣布购买夜后。</p></section>
+        </div>
+        <p class="rules-source">实现依据：传统三至五人版，51 张郁金香牌、11 张事件牌（每局随机移除 1 张）与 8 位收藏家。</p>
+      </div>
+    </dialog>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

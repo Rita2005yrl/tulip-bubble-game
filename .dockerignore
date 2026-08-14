@@ -1,0 +1,8 @@
+.git
+.openai
+.pnpm-store
+.wrangler
+data
+dist
+node_modules
+npm-debug.log

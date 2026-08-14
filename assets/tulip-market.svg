@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Amsterdam tulip market</title>
+  <desc id="desc">A stylized seventeenth century tulip trading table near a canal.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#d8edf1"/>
+      <stop offset="0.55" stop-color="#f5dfbd"/>
+      <stop offset="1" stop-color="#c78f67"/>
+    </linearGradient>
+    <linearGradient id="canal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#2a6f8c"/>
+      <stop offset="1" stop-color="#173f55"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#3b2b1c" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#sky)"/>
+  <path d="M0 540 C170 495 274 575 430 530 C612 477 760 550 916 520 C1042 496 1124 458 1200 472 L1200 760 L0 760 Z" fill="url(#canal)"/>
+  <path d="M0 575 C165 540 285 620 438 572 C610 520 748 594 930 554 C1038 530 1126 492 1200 510" fill="none" stroke="#f7d89c" stroke-width="9" opacity="0.5"/>
+
+  <g opacity="0.92">
+    <path d="M98 382 L98 205 L157 152 L218 205 L218 382 Z" fill="#8f5b43"/>
+    <path d="M83 207 L157 134 L233 207 Z" fill="#6e3e32"/>
+    <rect x="121" y="235" width="30" height="54" fill="#f7d89c"/>
+    <rect x="166" y="235" width="30" height="54" fill="#f7d89c"/>
+    <rect x="142" y="318" width="37" height="64" fill="#4c2b28"/>
+  </g>
+  <g opacity="0.92">
+    <path d="M250 400 L250 166 L327 104 L404 166 L404 400 Z" fill="#b66f4b"/>
+    <path d="M232 170 L327 80 L424 170 Z" fill="#71392e"/>
+    <rect x="281" y="214" width="34" height="62" fill="#fde8b4"/>
+    <rect x="339" y="214" width="34" height="62" fill="#fde8b4"/>
+    <rect x="306" y="322" width="46" height="78" fill="#4b2926"/>
+  </g>
+  <g opacity="0.88">
+    <path d="M430 383 L430 226 L502 176 L573 226 L573 383 Z" fill="#86513e"/>
+    <path d="M415 230 L502 158 L589 230 Z" fill="#5b332b"/>
+    <rect x="466" y="252" width="30" height="52" fill="#f2d59c"/>
+    <rect x="511" y="252" width="30" height="52" fill="#f2d59c"/>
+  </g>
+  <g opacity="0.88">
+    <path d="M855 376 L855 194 L935 126 L1015 194 L1015 376 Z" fill="#9a6148"/>
+    <path d="M836 198 L935 100 L1035 198 Z" fill="#68372e"/>
+    <rect x="890" y="238" width="34" height="60" fill="#fae2a7"/>
+    <rect x="944" y="238" width="34" height="60" fill="#fae2a7"/>
+    <rect x="916" y="320" width="43" height="56" fill="#452625"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <path d="M210 470 C298 410 488 400 594 454 C723 522 900 472 1008 426 C1000 521 945 590 844 621 C704 664 544 626 396 630 C287 633 217 575 210 470 Z" fill="#c88f54"/>
+    <path d="M240 470 C330 435 478 437 587 486 C704 539 857 500 978 455" fill="none" stroke="#7b4b32" stroke-width="12" stroke-linecap="round" opacity="0.4"/>
+    <ellipse cx="462" cy="516" rx="210" ry="46" fill="#e8c27a"/>
+    <ellipse cx="750" cy="520" rx="190" ry="42" fill="#e2b76e"/>
+  </g>
+
+  <g>
+    <rect x="334" y="424" width="235" height="98" rx="8" fill="#f3e0bf" stroke="#7c5037" stroke-width="5"/>
+    <rect x="619" y="418" width="250" height="106" rx="8" fill="#f6e7c8" stroke="#7c5037" stroke-width="5"/>
+    <path d="M356 449 H548 M356 476 H548 M640 446 H846 M640 476 H846" stroke="#8b6041" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="390" cy="493" r="12" fill="#b9344d"/>
+    <circle cx="425" cy="493" r="12" fill="#dca445"/>
+    <circle cx="460" cy="493" r="12" fill="#2f7a66"/>
+    <circle cx="673" cy="496" r="13" fill="#b9344d"/>
+    <circle cx="714" cy="496" r="13" fill="#f5f1e8"/>
+    <circle cx="755" cy="496" r="13" fill="#713f7b"/>
+  </g>
+
+  <g transform="translate(488 343)">
+    <path d="M0 92 C-26 53 -18 18 14 0 C29 32 27 65 0 92 Z" fill="#c82d47"/>
+    <path d="M4 92 C23 47 50 23 91 24 C82 63 48 86 4 92 Z" fill="#f3d06a"/>
+    <path d="M1 92 C-3 46 12 18 49 2 C58 47 36 75 1 92 Z" fill="#fff4d1"/>
+    <path d="M3 93 C12 124 11 150 -4 180" fill="none" stroke="#2f7a66" stroke-width="10" stroke-linecap="round"/>
+    <path d="M0 128 C-43 118 -70 95 -80 58 C-40 58 -12 82 0 128 Z" fill="#2f7a66"/>
+  </g>
+
+  <g transform="translate(705 340)">
+    <path d="M0 96 C-32 50 -22 12 13 -7 C31 34 29 70 0 96 Z" fill="#7d1f31"/>
+    <path d="M6 95 C31 45 64 20 107 25 C96 71 59 96 6 95 Z" fill="#f5f1e8"/>
+    <path d="M-1 97 C-7 54 8 22 44 0 C57 39 38 76 -1 97 Z" fill="#f0b83d"/>
+    <path d="M2 96 C8 127 4 154 -10 184" fill="none" stroke="#2f7a66" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-2 132 C-44 122 -75 96 -87 58 C-43 57 -13 82 -2 132 Z" fill="#34856e"/>
+  </g>
+
+  <g opacity="0.78">
+    <path d="M164 625 C210 600 268 602 314 628" fill="none" stroke="#f3dba6" stroke-width="7" stroke-linecap="round"/>
+    <path d="M882 646 C930 619 989 622 1038 648" fill="none" stroke="#f3dba6" stroke-width="7" stroke-linecap="round"/>
+    <path d="M623 685 C670 658 738 662 785 688" fill="none" stroke="#f3dba6" stroke-width="7" stroke-linecap="round"/>
+  </g>
+</svg>
