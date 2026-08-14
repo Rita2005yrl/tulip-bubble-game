@@ -11,6 +11,7 @@ ENV NODE_ENV=production PORT=3000 DATA_DIR=/app/data STATIC_DIR=/app/dist
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/server ./server
 COPY --from=build /app/game-engine.js ./game-engine.js
+COPY --from=build /app/rules.js ./rules.js
 COPY --from=build /app/package.json ./package.json
 EXPOSE 3000
 CMD ["node", "server/index.js"]
